@@ -1,0 +1,55 @@
+
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorify</title>
+  <link rel="stylesheet" href="./calculator.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body >
+  <div class="calc-border">
+    <div class="flexBoxContainer">
+      <div class="calculator">
+        <section id="screen-wrapper">
+          <div class="keys txt-decoration bckground tall-wide history" id="screen-history"></div>
+        </section>
+          <section id="screen-wrapper">
+            <div class="keys txt-decoration bckground tall-wide" id="screen"></div>
+          </section>
+          <div class="keys txt-decoration bckground" onclick="history()"><i class="fas fa-history"></i></div>
+          <div class="keys txt-decoration bckground" onclick="clearAll()">AC</div>
+          <div class="keys txt-decoration bckground" onclick="operatorVal('*')">*</div>
+          <div class="keys txt-decoration bckground" onclick="operatorVal('/')">/</div>
+          <div class="keys txt-decoration" onclick="calcVal('7')">7</div>
+          <div class="keys txt-decoration" onclick="calcVal('8')">8</div>
+          <div class="keys txt-decoration" onclick="calcVal('9')">9</div>
+          <div class="keys txt-decoration bckground" onclick="operatorVal('+')">+</div>
+          <div class="keys txt-decoration" onclick="calcVal('4')">4</div>
+          <div class="keys txt-decoration" onclick="calcVal('5')">5</div>
+          <div class="keys txt-decoration" onclick="calcVal('6')">6</div>
+          <div class="keys txt-decoration bckground" onclick="operatorVal('-')">-</div>
+          <section id="anomaly-keys-wrapper">
+              <section>
+                  <div class="keys txt-decoration" onclick="calcVal('1')">1</div>
+                  <div class="keys txt-decoration" onclick="calcVal('2')">2</div>
+                  <div class="keys txt-decoration" onclick="calcVal('3')">3</div>
+                  <div class="keys txt-decoration" onclick="backspace()"><i class="fas fa-backspace"></i></div>
+                  <div class="keys txt-decoration" onclick="calcVal('0')">0</div>
+                  <div class="keys txt-decoration" onclick="operatorVal('.')" >.</div>
+              </section>
+              <section>
+                  <div class="keys tall txt-decoration eq-bckground" onclick="operatorEqual()">=</div>
+              </section>
+          </section>
+      </div>
+      <div class="line"></div>
+  </div>
+  </div>
+  <script src="calculator.js"></script>
+</body>
+</html>
