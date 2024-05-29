@@ -1,6 +1,6 @@
 
 
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,18 +13,17 @@
 </head>
 <body >
   <div class="calc-border">
-    <div class="flexBoxContainer">
-      <div class="calculator">
-        <section id="screen-wrapper">
-          <div class="keys txt-decoration bckground tall-wide history" id="screen-history"></div>
-        </section>
+      <div id="history-container" class="hide-history">              
+    </div>
+    <div class="flexBoxContainer bottom">
+      <div class="calculator">        
           <section id="screen-wrapper">
-            <div class="keys txt-decoration bckground tall-wide" id="screen"></div>
+            <div class="keys txt-decoration tall-wide" id="screen"></div>
           </section>
           <div class="keys txt-decoration bckground" onclick="history()"><i class="fas fa-history"></i></div>
           <div class="keys txt-decoration bckground" onclick="clearAll()">AC</div>
-          <div class="keys txt-decoration bckground" onclick="operatorVal('*')">*</div>
-          <div class="keys txt-decoration bckground" onclick="operatorVal('/')">/</div>
+          <div class="keys txt-decoration bckground">*</div>
+          <div class="keys txt-decoration bckground" >/</div>
           <div class="keys txt-decoration" onclick="calcVal('7')">7</div>
           <div class="keys txt-decoration" onclick="calcVal('8')">8</div>
           <div class="keys txt-decoration" onclick="calcVal('9')">9</div>
@@ -40,7 +39,7 @@
                   <div class="keys txt-decoration" onclick="calcVal('3')">3</div>
                   <div class="keys txt-decoration" onclick="backspace()"><i class="fas fa-backspace"></i></div>
                   <div class="keys txt-decoration" onclick="calcVal('0')">0</div>
-                  <div class="keys txt-decoration" onclick="operatorVal('.')" >.</div>
+                  <div class="keys txt-decoration" >.</div>
               </section>
               <section>
                   <div class="keys tall txt-decoration eq-bckground" onclick="operatorEqual()">=</div>
@@ -50,6 +49,6 @@
       <div class="line"></div>
   </div>
   </div>
-  <script src="calculator.js"></script>
+  <script src="./calculator.js"></script>
 </body>
 </html>

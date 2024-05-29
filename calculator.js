@@ -1,9 +1,22 @@
-const historyArr = ['10 + 10 + 10 = 30', '20 - 10 = 10']
-
+/**
+ * Allowed Math Operators
+ */
 const allowedOperations = ['+', '-']
+
+/**
+ * Current value
+ */
 let currentValue = ''
+
+/**
+ * Calculation Array
+ */
 let currentCalculationArr = []
-let resetOnStart = true
+
+/**
+ * Should the next operator reset
+ */
+let resetOnStartValue = true
 
 
 /**
@@ -13,62 +26,77 @@ function clearAll(){
     document.getElementById("screen").innerHTML = "";    
 }
 
-function calcVal(value){
-    if(resetOnStart){
+/**
+ * Reset all values
+ */
+function resetOnStart(){
+    if(resetOnStartValue){
         clearAll()
         resetValues()
-        resetOnStart= false
+        resetOnStartValue= false
     }
+}
+
+/**
+ * Calculate numbers
+ * @param {string} value 
+ */
+function calcVal(value){
+    resetOnStart()
 
     if(allowedOperations.includes(currentValue)){
         currentValue = ''
     }
+
     const numberDiv =`<span class="number">${value}</span>`;
     const el = document.querySelector('#screen');
     el.insertAdjacentHTML('beforeend', numberDiv);
     currentValue = currentValue + value
-    console.log(currentValue, currentCalculationArr)
 }
 
+/**
+ * When a Operator is selected
+ * @param {*} value 
+ */
 function operatorVal(value){
-    if(resetOnStart){
-        clearAll()
-        resetValues()
-        resetOnStart= false
+    resetOnStart()
+
+    if (allowedOperations.includes(currentValue)){
+        removeLastHTML()
+        currentCalculationArr.pop()
+    } else {
+        currentCalculationArr.push(currentValue || '0')
     }
 
-    if(allowedOperations.includes(currentValue)){
-        removeLastHTML()
-        console.log(currentCalculationArr.pop())
-    }else{
-        currentCalculationArr.push(currentValue)
-    }
     const operatorDiv =`<span class="operation">${value}</span>`;
     const el = document.querySelector('#screen');
     el.insertAdjacentHTML('beforeend', operatorDiv);
     
     currentValue = value
     currentCalculationArr.push(currentValue)
-    console.log(currentValue, currentCalculationArr)
 }
 
 /**
  * Removes only the last entry
  */
 function backspace(){
-    if(allowedOperations.includes(currentValue)){
+    resetOnStart()
+
+    if (allowedOperations.includes(currentValue)){
         currentCalculationArr.pop()
-        currentValue = currentCalculationArr[currentCalculationArr.length -1 ]
-        
-    }else if(currentValue){
+        currentValue = currentCalculationArr[currentCalculationArr.length -1 ]        
+    } else if (currentValue){
         if(currentCalculationArr[currentCalculationArr.length -1 ] == currentValue) currentCalculationArr.pop()        
         currentValue = currentValue.substring(0, currentValue.length - 1) || currentCalculationArr.pop();
         currentCalculationArr.push(currentValue)
     }    
-    console.log(currentValue, currentCalculationArr)
     removeLastHTML()
 }
 
+/**
+ * Removes the last child entry
+ * @returns 
+ */
 function removeLastHTML(){
     const myElement = document.getElementById("screen");
     if(!myElement.lastChild){
@@ -78,27 +106,69 @@ function removeLastHTML(){
     myElement.removeChild(myElement.lastChild)
 }
 
+/**
+ * Reset all values
+ */
 function resetValues(){
     currentCalculationArr = []
     currentValue = ''    
 }
 
+/**
+ * Equal Button
+ */
 function operatorEqual(){
+    if(resetOnStartValue){
+        resetOnStart()
+        currentValue = '0' 
+    }
+
     if(currentCalculationArr[currentCalculationArr.length -1 ] !== currentValue){
         currentCalculationArr.push(currentValue)
     }
-    const result = currentCalculationArr.reduce((acc, val) => {
+
+    const result = calculateTotals()
+
+    totalsHTML(result)
+
+    resetOnStartValue = true
+
+    addToHistoryContainer()
+}
+
+/**
+ * Takes the screen details to the history container
+ */
+function addToHistoryContainer(){
+    const screenHistory = document.querySelector('#history-container');
+    screenHistory.insertAdjacentHTML("afterbegin", `<div class="keys txt-decoration tall-wide">${document.getElementById("screen").innerHTML}</div>`);
+}
+
+/**
+ * adds the results to the html
+ * @param {*} result 
+ */
+function totalsHTML(result){
+    const operatorDiv =`<span class="equal">=</span><span class="value">${result}</span>`;
+    const el = document.querySelector('#screen');
+    el.insertAdjacentHTML('beforeend', operatorDiv);
+}
+
+/**
+ * Calculates the total of the array
+ * @returns number
+ */
+function calculateTotals(){
+    return currentCalculationArr.reduce((acc, val) => {
         if (!isNaN(val)) {
             if (acc.operator === null) {
                 return { result: parseFloat(val), operator: null };
             } else {
                 if (acc.operator === '+') {
-                    console.log("in plus")
                     return { result: acc.result + parseFloat(val), operator: null };
                 }
 
                 if (acc.operator === '-') {
-                    console.log("in minus")
                     return { result: acc.result - parseFloat(val), operator: null };
                 }
             }
@@ -106,17 +176,16 @@ function operatorEqual(){
             return { ...acc, operator: val };
         }
     }, { result: 0, operator: null }).result;
-    const operatorDiv =`<span class="equal">=</span><span class="value">${result}</span>`;
-    const el = document.querySelector('#screen');
-    el.insertAdjacentHTML('beforeend', operatorDiv);
-    historyArr.push(`${currentCalculationArr}`)
-    resetOnStart = true
 }
 
 /**
  * Display History
  */
 function history(){
-
+    if(document.getElementById('history-container').matches('.hide-history')){
+        document.getElementById('history-container').classList.remove('hide-history')
+    }else{
+        document.getElementById('history-container').classList.add('hide-history')
+    }
 }
 
